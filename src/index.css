@@ -1,0 +1,339 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+
+@theme inline {
+      --font-inter: 'Inter', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+
+      --radius-sm: calc(var(--radius) - 4px);
+      --radius-md: calc(var(--radius) - 2px);
+      --radius-lg: var(--radius);
+      --radius-xl: calc(var(--radius) + 4px);
+      --color-background: var(--background);
+      --color-foreground: var(--foreground);
+      --color-card: var(--card);
+      --color-card-foreground: var(--card-foreground);
+      --color-popover: var(--popover);
+      --color-popover-foreground: var(--popover-foreground);
+      --color-primary: var(--primary);
+      --color-primary-foreground: var(--primary-foreground);
+      --color-secondary: var(--secondary);
+      --color-secondary-foreground: var(--secondary-foreground);
+      --color-muted: var(--muted);
+      --color-muted-foreground: var(--muted-foreground);
+      --color-accent: var(--accent);
+      --color-accent-foreground: var(--accent-foreground);
+      --color-destructive: var(--destructive);
+      --color-border: var(--border);
+      --color-input: var(--input);
+      --color-ring: var(--ring);
+      --color-chart-1: var(--chart-1);
+      --color-chart-2: var(--chart-2);
+      --color-chart-3: var(--chart-3);
+      --color-chart-4: var(--chart-4);
+      --color-chart-5: var(--chart-5);
+      --color-sidebar: var(--sidebar);
+      --color-sidebar-foreground: var(--sidebar-foreground);
+      --color-sidebar-primary: var(--sidebar-primary);
+      --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+      --color-sidebar-accent: var(--sidebar-accent);
+      --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+      --color-sidebar-border: var(--sidebar-border);
+      --color-sidebar-ring: var(--sidebar-ring);
+}
+
+:root {
+      --radius: 0.625rem;
+      --background: hsl(0, 0%, 100%);
+      --foreground: hsl(229, 85%, 5%);
+      --card: hsl(0, 0%, 100%);
+      --card-foreground: hsl(229, 85%, 5%);
+      --popover: hsl(0, 0%, 100%);
+      --popover-foreground: hsl(229, 85%, 5%);
+      --primary: hsl(223, 48%, 11%);
+      --primary-foreground: hsl(210, 40%, 98%);
+      --secondary: hsl(210, 40%, 96%);
+      --secondary-foreground: hsl(223, 48%, 11%);
+      --muted: hsl(210, 40%, 96%);
+      --muted-foreground: hsl(215, 18%, 47%);
+      --accent: hsl(142 76% 73%);
+      --accent-foreground: hsl(220 13% 18%);
+      --accent-glow: hsl(142 76% 85%);
+      --destructive: hsl(357, 100%, 45%);
+      --border: hsl(214, 33%, 91%);
+      --input: hsl(214, 33%, 91%);
+      --ring: hsl(215, 23%, 65%);
+      --chart-1: hsl(18, 100%, 48%);
+      --chart-2: hsl(175, 100%, 29%);
+      --chart-3: hsl(196, 72%, 23%);
+      --chart-4: hsl(44, 100%, 50%);
+      --chart-5: hsl(36, 100%, 50%);
+      --sidebar: hsl(210, 35%, 98%);
+      --sidebar-foreground: hsl(229, 85%, 5%);
+      --sidebar-primary: hsl(222, 49%, 11%);
+      --sidebar-primary-foreground: hsl(210, 35%, 98%);
+      --sidebar-accent: hsl(210, 41%, 96%);
+      --sidebar-accent-foreground: hsl(222, 49%, 11%);
+      --sidebar-border: hsl(214, 33%, 91%);
+      --sidebar-ring: hsl(215, 23%, 65%);
+      --sidebar-active: hsl(222, 49%, 11%);
+      --sidebar-active-foreground: hsl(210, 35%, 98%);
+      --sidebar-hover: hsl(210, 41%, 96%);
+      --sidebar-hover-foreground: hsl(222, 49%, 11%);
+
+
+      --hero-gradient: linear-gradient(135deg, hsl(221 83% 53%), hsl(142 76% 73%));
+      --card-gradient: linear-gradient(145deg, hsl(0 0% 100%), hsl(220 14% 98%));
+      --tech-glow: 0 8px 32px oklab(54.591% -0.02715 -0.21377 / 0.12);
+      --accent-glow-shadow: 0 4px 20px hsl(142 76% 73% / 0.25);
+      --text-gradient: linear-gradient(135deg, hsl(221 83% 53%), hsl(142 76% 73%));
+
+      --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      --transition-spring: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.dark {
+      --background: hsl(229, 85%, 5%);
+      --foreground: hsl(210, 40%, 98%);
+      --card: hsl(223, 48%, 11%);
+      --card-foreground: hsl(210, 40%, 98%);
+      --popover: hsl(223, 48%, 11%);
+      --popover-foreground: hsl(210, 40%, 98%);
+      --primary: hsl(222, 77%, 53%);
+      --primary-foreground: hsl(222, 77%, 53%);
+      --primary-glow: hsl(223, 88%, 68%);
+      --secondary: hsl(259, 49%, 21%);
+      --secondary-foreground: hsl(248, 44%, 97%);
+      --muted: hsl(259, 49%, 21%);
+      --muted-foreground: hsl(215, 23%, 65%);
+      --accent: hsl(142 76% 73%);
+      --accent-foreground: hsl(220 13% 9%);
+      --accent-glow: hsl(142 76% 85%);
+      --destructive: hsl(359, 100%, 70%);
+      --border: hsla(0, 0%, 100%, 0.10);
+      --input: hsla(0, 0%, 100%, 0.15);
+      --ring: hsl(220, 10%, 46%);
+      --chart-1: hsl(225, 84%, 49%);
+      --chart-2: hsl(160, 100%, 37%);
+      --chart-3: hsl(36, 100%, 50%);
+      --chart-4: hsl(273, 100%, 64%);
+      --chart-5: hsl(345, 100%, 56%);
+      --sidebar: hsl(222, 49%, 11%);
+      --sidebar-foreground: hsl(210, 35%, 98%);
+      --sidebar-primary: hsl(225, 84%, 49%);
+      --sidebar-primary-foreground: hsl(210, 35%, 98%);
+      --sidebar-accent: hsl(217, 36%, 18%);
+      --sidebar-accent-foreground: hsl(210, 35%, 98%);
+      --sidebar-border: hsla(0, 0%, 100%, 0.10);
+      --sidebar-ring: hsl(220, 10%, 46%);
+      --sidebar-active: hsl(225, 84%, 49%);
+      --sidebar-active-foreground: hsl(210, 35%, 98%);
+      --sidebar-hover: hsl(217, 36%, 18%);
+      --sidebar-hover-foreground: hsl(210, 35%, 98%);
+
+      --hero-gradient: linear-gradient(135deg, hsl(221 83% 53%), hsl(142 76% 73%));
+      --card-gradient: linear-gradient(145deg, oklab(22.118% -0.00175 -0.01068), oklab(25.146% -0.0012 -0.01216));
+      --tech-glow: 0 8px 32px oklab(54.591% -0.02715 -0.21377 / 0.2);
+      --accent-glow-shadow: 0 4px 20px oklab(86.883% -0.12182 0.05771 / 0.3);
+      --text-gradient: linear-gradient(135deg, oklab(54.591% -0.02715 -0.21377), oklab(86.883% -0.12182 0.05771));
+}
+
+@layer base {
+      * {
+            @apply border-border outline-ring/50;
+      }
+
+      *::selection {
+            @apply bg-primary text-foreground;
+      }
+
+      html {
+            @apply scroll-smooth;
+      }
+
+      body {
+            @apply bg-background text-foreground font-inter;
+      }
+
+      ::-webkit-scrollbar {
+            width: 0;
+            height: 0;
+      }
+
+      ::-webkit-scrollbar-track {
+            background: transparent;
+      }
+
+      ::-webkit-scrollbar-thumb {
+            background: transparent;
+      }
+
+      .hide-number-arrows::-webkit-outer-spin-button,
+      .hide-number-arrows::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+      }
+
+      .hide-number-arrows {
+            -moz-appearance: textfield;
+      }
+
+      .text-gradient {
+            background: var(--text-gradient);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+      }
+
+      .hero-gradient {
+            background: var(--hero-gradient);
+      }
+
+      .card-gradient {
+            background: var(--card-gradient);
+            background-size: cover;
+            background-repeat: no-repeat;
+      }
+
+      .tech-glow {
+            box-shadow: var(--tech-glow);
+      }
+
+
+      .animate-float {
+            animation: float 6s ease-in-out infinite;
+      }
+
+      .animate-slide-up {
+            animation: slideUp 0.6s ease-out forwards;
+            opacity: 0;
+            transform: translateY(30px);
+      }
+
+      .animate-slide-down {
+            animation: slideDown 0.6s ease-out forwards;
+            opacity: 1;
+            transform: translateY(0);
+      }
+
+      .animate-fade-in {
+            animation: fadeIn 0.8s ease-out forwards;
+            opacity: 0;
+      }
+
+      .animate-scale-in {
+            animation: scaleIn 0.5s ease-out forwards;
+            opacity: 0;
+            transform: scale(0.9);
+      }
+
+      @keyframes float {
+
+            0%,
+            100% {
+                  transform: translateY(0px);
+            }
+
+            50% {
+                  transform: translateY(-20px);
+            }
+      }
+
+
+      @keyframes slideUp {
+            to {
+                  opacity: 1;
+                  transform: translateY(0);
+            }
+      }
+
+      @keyframes slideDown {
+            from {
+                  opacity: 1;
+                  transform: translateY(0);
+            }
+
+            to {
+                  opacity: 0;
+                  transform: translateY(-30px);
+            }
+      }
+
+      @keyframes fadeIn {
+            to {
+                  opacity: 1;
+            }
+      }
+
+      @keyframes scaleIn {
+            to {
+                  opacity: 1;
+                  transform: scale(1);
+            }
+      }
+
+      .skill-bar {
+            transition: width 1.5s ease-in-out;
+      }
+
+      .hover-lift {
+            transition: var(--transition-smooth);
+      }
+
+      .hover-lift:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--tech-glow) !important;
+      }
+
+      .typing-animation {
+            border-right: 2px solid var(--color-primary);
+            animation: blink 1s infinite;
+      }
+
+      @keyframes blink {
+
+            0%,
+            50% {
+                  border-color: var(--color-primary);
+            }
+
+            51%,
+            100% {
+                  border-color: transparent;
+            }
+      }
+
+
+      @keyframes accordion-down {
+            from {
+                  height: 0;
+            }
+
+            to {
+                  height: var(--radix-accordion-content-height);
+            }
+      }
+
+      @keyframes accordion-up {
+            from {
+                  height: var(--radix-accordion-content-height);
+            }
+
+            to {
+                  height: 0;
+            }
+      }
+
+      .animate-accordion-down {
+            animation: accordion-down 0.2s ease-out;
+      }
+
+      .animate-accordion-up {
+            animation: accordion-up 0.2s ease-out;
+      }
+}

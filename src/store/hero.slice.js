@@ -1,0 +1,71 @@
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import axios from "axios";
+import { SummeryApi } from "../config/api";
+
+const baseUrl = import.meta.env.VITE_BASE_URL;
+
+const initialState = {
+      isLoading: false,
+      heroData: null,
+      error: null,
+};
+
+export const addUpdateHeroData = createAsyncThunk(
+      "hero/updateHeroData",
+      async (formData, { rejectWithValue }) => {
+            try {
+                  const response = await axios.post(`${baseUrl}${SummeryApi.addUpdateHeroContentUrl}`, formData, { 
+                        withCredentials: true,
+                  });
+                  return response.data;
+            } catch (error) {
+                  return rejectWithValue(error.response?.data);
+            }
+      }
+);
+
+export const fetchHeroData = createAsyncThunk(
+      "hero/fetchHeroData",
+      async (_, { rejectWithValue }) => {
+            try {
+                  const response = await axios.get(`${baseUrl}${SummeryApi.getHeroContentUrl}`, {
+                        withCredentials: true,
+                  });
+                  return response.data;
+            } catch (error) {
+                  return rejectWithValue(error.response?.data);
+            }
+      }
+);
+
+const heroSlice = createSlice({
+      name: "hero",
+      initialState,
+      reducers: {},
+      extraReducers: (builder) => { 
+            builder.addCase(addUpdateHeroData.pending, (state) => {
+                  state.isLoading = true;
+                  state.error = null;
+            }).addCase(addUpdateHeroData.fulfilled, (state, action) => {
+                  state.isLoading = false;
+                  state.heroData = action.payload.data || null;
+                  state.error = null;
+            }).addCase(addUpdateHeroData.rejected, (state, action) => {
+                  state.isLoading = false;
+                  state.error = action.payload;
+            }).addCase(fetchHeroData.pending, (state) => {
+                  state.isLoading = true;
+                  state.error = null;
+            }).addCase(fetchHeroData.fulfilled, (state, action) => {
+                  state.isLoading = false;
+                  state.heroData = action.payload.data || null;
+                  state.error = null;
+            }).addCase(fetchHeroData.rejected, (state, action) => {
+                  state.isLoading = false;
+                  state.error = action.payload;
+            });
+      }
+});
+
+export const heroActions = heroSlice.actions;
+export default heroSlice.reducer;
