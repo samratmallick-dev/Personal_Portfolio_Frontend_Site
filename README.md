@@ -152,11 +152,6 @@ All other runtime values come from the backend responses.
 | Security | `useDisableContextMenuAndCopy` is applied on admin pages to reduce casual copying |
 | Asset sizes | Optimize hero/project images before upload to keep load times low |
 
-## Personal Change Log
-
-- **2025-02** – Added full admin CRUD flows for projects and services.
-- **2025-06** – Migrated to React 19 and Vite 7; rewired state slices for new API endpoints.
-- **2025-09** – Introduced screenshot gallery and refreshed Tailwind theme tokens.
 
 ## Maintainer
 
