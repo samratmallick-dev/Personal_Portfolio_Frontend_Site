@@ -336,4 +336,32 @@
       .animate-accordion-up {
             animation: accordion-up 0.2s ease-out;
       }
+
+      .custom-toast {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+      }
+
+      @keyframes toastSlideFade {
+            0% {
+                  opacity: 0;
+                  transform: translateY(-20px) scale(0.95);
+            }
+
+            50% {
+                  opacity: 1;
+                  transform: translateY(0px) scale(1.02);
+            }
+
+            100% {
+                  opacity: 1;
+                  transform: scale(1);
+            }
+      }
+
+      .animate-toast-slide {
+            animation: toastSlideFade 0.35s ease forwards;
+      }
+
 }

@@ -5,21 +5,15 @@ export function useDisableContextMenuAndCopy() {
       useEffect(() => {
             const handleContextMenu = (e) => {
                   e.preventDefault();
-                  toast.error('Right-click is disabled!', {
-                        action: {
-                              label: 'OK',
-                              onClick: () => console.log('Right-click disabled notification dismissed'),
-                        },
+                  toast("⚠️ Content is protected!!", {
+                        description: "Right-click is disabled on this website.",
                   });
             };
 
             const handleCopy = (e) => {
                   e.preventDefault();
-                  toast.error('Copying is disabled!', {
-                        action: {
-                              label: 'OK',
-                              onClick: () => console.log('Copy disabled notification dismissed'),
-                        },
+                  toast("⚠️ Copying is disabled!", {
+                        description: "This content cannot be copied.",
                   });
             };
 
