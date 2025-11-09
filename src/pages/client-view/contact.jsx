@@ -48,7 +48,7 @@ const MyContact = () => {
                   <div className="container mx-auto px-4">
                         <div className="w-full flex lg:flex-row flex-col items-center gap-4">
                               <h2 className="text-5xl font-bold text-center text-gradient">Get In Touch</h2>
-                              <div className="w-44 h-1 bg-gradient-to-l from-primary to-secondary rounded-lg flex order-last lg:mt-10 mt-0"></div>
+                              <div className="w-44 h-1 bg-linear-to-l from-primary to-secondary rounded-lg flex order-last lg:mt-10 mt-0"></div>
                         </div>
                         <div className='w-full flex flex-col md:flex-row items-center gap-4 mt-8'>
                               <div className='md:w-1/2 w-full flex flex-col items-center justify-center gap-8'>
