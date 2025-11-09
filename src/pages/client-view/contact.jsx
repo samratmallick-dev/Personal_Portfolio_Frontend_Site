@@ -80,7 +80,7 @@ const MyContact = () => {
                                           </CardContent>
                                           <CardFooter className={'flex items-center gap-4 flex-wrap'}>
                                                 <Button
-                                                      onClick={() => window.open('https://www.facebook.com/samratmallick.dev/', '_blank')}      
+                                                      onClick={() => window.open('https://www.facebook.com/samratmallick.dev/', '_blank')}
                                                       variant="outline"
                                                       size="sm"
                                                       className="hover:bg-primary text-muted-foreground hover:text-white transition-colors duration-300 ease-out"
@@ -89,7 +89,7 @@ const MyContact = () => {
                                                       Facebook
                                                 </Button>
                                                 <Button
-                                                      onClick={() => window.open('https://www.instagram.com/samratmallick.dev/', '_blank')}      
+                                                      onClick={() => window.open('https://www.instagram.com/samratmallick.dev/', '_blank')}
                                                       variant="outline"
                                                       size="sm"
                                                       className="hover:bg-primary text-muted-foreground hover:text-white transition-colors duration-300 ease-out"
@@ -98,7 +98,7 @@ const MyContact = () => {
                                                       Instagram
                                                 </Button>
                                                 <Button
-                                                      onClick={() => window.open('https://github.com/samratmallick-dev/', '_blank')}      
+                                                      onClick={() => window.open('https://github.com/samratmallick-dev/', '_blank')}
                                                       variant="outline"
                                                       size="sm"
                                                       className="hover:bg-primary text-muted-foreground hover:text-white transition-colors duration-300 ease-out"
@@ -107,7 +107,7 @@ const MyContact = () => {
                                                       GitHub
                                                 </Button>
                                                 <Button
-                                                      onClick={() => window.open('https://www.linkedin.com/in/samrat-mallick01', '_blank')}      
+                                                      onClick={() => window.open('https://www.linkedin.com/in/samrat-mallick01', '_blank')}
                                                       variant="outline"
                                                       size="sm"
                                                       className="hover:bg-primary text-muted-foreground hover:text-white transition-colors duration-300 ease-out"
@@ -117,7 +117,6 @@ const MyContact = () => {
                                                 </Button>
                                           </CardFooter>
                                     </Card>
-
                               </div>
                               <div className='md:w-1/2 w-full flex items-center justify-center'>
                                     <Card className="hover-lift bg-background/30 hover:border-0 tech-glow w-full max-w-lg flex flex-col p-4 md:p-6 lg:p-8">
