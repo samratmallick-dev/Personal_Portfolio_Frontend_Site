@@ -180,7 +180,7 @@ const AdminSettings = () => {
                               <CardDescription>Your current account details</CardDescription>
                         </CardHeader>
                         <CardContent className="space-y-4">
-                              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                                     <div className="flex flex-col gap-2 flex-wrap">
                                           <Label className="text-sm font-medium text-muted-foreground">Name</Label>
                                           <div className="p-3 bg-sidebar-accent rounded-lg font-medium text-wrap">{user?.name || 'N/A'}</div>
