@@ -11,13 +11,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getContactDetails, sendContactMessage } from '@/store/contact.slice';
 import { toast } from 'sonner';
 
+const initialFormData = {
+      name: '',
+      email: '',
+      mobile: '',
+      message: ''
+};
 const MyContact = () => {
       const dispatch = useDispatch();
       const { contact: contactDetails, isLoading } = useSelector((state) => state.contact);
-      const initialFormData = contactFormIndex.reduce((acc, control) => {
-            acc[control.name] = '';
-            return acc;
-      }, {});
 
       const [formData, setFormData] = useState(initialFormData);
 

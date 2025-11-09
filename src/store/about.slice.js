@@ -1,38 +1,57 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
 import { SummeryApi } from "../config/api";
+import { createRequest, handleAsyncError, createAsyncReducer, createThunkMatcher } from "./utils/asyncUtils";
 
 const baseUrl = import.meta.env.VITE_BASE_URL;
 
 const initialState = {
-      isLoading: false,
+      loadingStates: {
+            fetchAboutData: false,
+            addUpdateAboutData: false,
+      },
       aboutData: null,
       error: null,
+      lastUpdated: null,
 };
 
 export const addUpdateAboutData = createAsyncThunk(
       "about/updateAboutData",
-      async (formData, { rejectWithValue }) => {
+      async (formData, { rejectWithValue, signal }) => {
             try {
-                  const response = await axios.post(`${baseUrl}${SummeryApi.addUpdateAboutContentUrl}`, formData, { 
-                        withCredentials: true,
-                  });
+                  const { request } = createRequest(
+                        {
+                              method: 'post',
+                              url: `${baseUrl}${SummeryApi.addUpdateAboutContentUrl}`,
+                              data: formData,
+                              headers: { "Content-Type": "multipart/form-data" },
+                        },
+                        15000 
+                  );
+
+                  const response = await request;
                   return response.data;
             } catch (error) {
-                  return rejectWithValue(error.response?.data);
+                  return rejectWithValue(handleAsyncError(error, 'Failed to update about data'));
             }
       }
 );
+
 export const fetchAboutData = createAsyncThunk(
       "about/fetchAboutData",
-      async (_, { rejectWithValue }) => {
+      async (_, { rejectWithValue, signal }) => {
             try {
-                  const response = await axios.get(`${baseUrl}${SummeryApi.getAboutContentUrl}`, {
-                        withCredentials: true,
-                  });
+                  const { request } = createRequest(
+                        {
+                              method: 'get',
+                              url: `${baseUrl}${SummeryApi.getAboutContentUrl}`,
+                        },
+                        10000 
+                  );
+
+                  const response = await request;
                   return response.data;
             } catch (error) {
-                  return rejectWithValue(error.response?.data);
+                  return rejectWithValue(handleAsyncError(error, 'Failed to fetch about data'));
             }
       }
 );
@@ -40,31 +59,53 @@ export const fetchAboutData = createAsyncThunk(
 const aboutSlice = createSlice({
       name: "about",
       initialState,
-      reducers: {},
+      reducers: {
+            clearAboutError: (state) => {
+                  state.error = null;
+            },
+            resetAboutLoadingState: (state, action) => {
+                  if (state.loadingStates[action.payload]) {
+                        state.loadingStates[action.payload] = false;
+                  }
+            },
+      },
       extraReducers: (builder) => {
-            builder.addCase(addUpdateAboutData.pending, (state) => {
-                  state.isLoading = true;
-                  state.error = null;
-            }).addCase(addUpdateAboutData.fulfilled, (state, action) => {
-                  state.isLoading = false;
-                  state.aboutData = action.payload.data || null;
-                  state.error = null;
-            }).addCase(addUpdateAboutData.rejected, (state, action) => {
-                  state.isLoading = false;
-                  state.error = action.payload;
-            }).addCase(fetchAboutData.pending, (state) => {
-                  state.isLoading = true;
-                  state.error = null;
-            }).addCase(fetchAboutData.fulfilled, (state, action) => {
-                  state.isLoading = false;
-                  state.aboutData = action.payload.data || null;
-                  state.error = null;
-            }).addCase(fetchAboutData.rejected, (state, action) => {
-                  state.isLoading = false;
-                  state.error = action.payload;
-            });
-      }
+            builder
+                  .addMatcher(
+                        (action) => action.type.includes('about/'),
+                        (state, action) => {
+                        }
+                  )
+                  .addMatcher(
+                        (action) => action.type.includes('fetchAboutData'),
+                        (state, action) => {
+                              const reducer = createAsyncReducer(fetchAboutData, 'fetchAboutData');
+                              if (action.type.endsWith('/pending')) return reducer[fetchAboutData.pending](state);
+                              if (action.type.endsWith('/fulfilled')) {
+                                    reducer[fetchAboutData.fulfilled](state, action);
+                                    if (action.payload?.data) {
+                                          state.aboutData = action.payload.data;
+                                    }
+                              }
+                              if (action.type.endsWith('/rejected')) return reducer[fetchAboutData.rejected](state, action);
+                        }
+                  )
+                  .addMatcher(
+                        (action) => action.type.includes('updateAboutData'),
+                        (state, action) => {
+                              const reducer = createAsyncReducer(addUpdateAboutData, 'addUpdateAboutData');
+                              if (action.type.endsWith('/pending')) return reducer[addUpdateAboutData.pending](state);
+                              if (action.type.endsWith('/fulfilled')) {
+                                    reducer[addUpdateAboutData.fulfilled](state, action);
+                                    if (action.payload?.data) {
+                                          state.aboutData = action.payload.data;
+                                    }
+                              }
+                              if (action.type.endsWith('/rejected')) return reducer[addUpdateAboutData.rejected](state, action);
+                        }
+                  );
+      },
 });
 
-export const aboutActions = aboutSlice.actions;
+export const { clearAboutError, resetAboutLoadingState } = aboutSlice.actions;
 export default aboutSlice.reducer;

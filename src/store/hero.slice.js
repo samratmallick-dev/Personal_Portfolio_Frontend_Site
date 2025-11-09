@@ -1,39 +1,57 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
 import { SummeryApi } from "../config/api";
+import { createRequest, handleAsyncError } from "./utils/asyncUtils";
 
 const baseUrl = import.meta.env.VITE_BASE_URL;
 
 const initialState = {
-      isLoading: false,
+      loadingStates: {
+            fetchHeroData: false,
+            updateHeroData: false,
+      },
       heroData: null,
       error: null,
+      lastUpdated: null,
 };
 
 export const addUpdateHeroData = createAsyncThunk(
       "hero/updateHeroData",
-      async (formData, { rejectWithValue }) => {
+      async (formData, { rejectWithValue, signal }) => {
             try {
-                  const response = await axios.post(`${baseUrl}${SummeryApi.addUpdateHeroContentUrl}`, formData, { 
-                        withCredentials: true,
-                  });
+                  const { request } = createRequest(
+                        {
+                              method: 'post',
+                              url: `${baseUrl}${SummeryApi.addUpdateHeroContentUrl}`,
+                              data: formData,
+                              headers: { "Content-Type": "multipart/form-data" },
+                        },
+                        15000
+                  );
+
+                  const response = await request;
                   return response.data;
             } catch (error) {
-                  return rejectWithValue(error.response?.data);
+                  return rejectWithValue(handleAsyncError(error, 'Failed to update hero data'));
             }
       }
 );
 
 export const fetchHeroData = createAsyncThunk(
       "hero/fetchHeroData",
-      async (_, { rejectWithValue }) => {
+      async (_, { rejectWithValue, signal }) => {
             try {
-                  const response = await axios.get(`${baseUrl}${SummeryApi.getHeroContentUrl}`, {
-                        withCredentials: true,
-                  });
+                  const { request } = createRequest(
+                        {
+                              method: 'get',
+                              url: `${baseUrl}${SummeryApi.getHeroContentUrl}`,
+                        },
+                        10000
+                  );
+
+                  const response = await request;
                   return response.data;
             } catch (error) {
-                  return rejectWithValue(error.response?.data);
+                  return rejectWithValue(handleAsyncError(error, 'Failed to fetch hero data'));
             }
       }
 );
@@ -41,31 +59,50 @@ export const fetchHeroData = createAsyncThunk(
 const heroSlice = createSlice({
       name: "hero",
       initialState,
-      reducers: {},
-      extraReducers: (builder) => { 
+      reducers: {
+            clearHeroError: (state) => {
+                  state.error = null;
+            },
+            resetHeroLoadingState: (state, action) => {
+                  if (state.loadingStates[action.payload]) {
+                        state.loadingStates[action.payload] = false;
+                  }
+            },
+      },
+      extraReducers: (builder) => {
+
             builder.addCase(addUpdateHeroData.pending, (state) => {
-                  state.isLoading = true;
+                  state.loadingStates.updateHeroData = true;
                   state.error = null;
-            }).addCase(addUpdateHeroData.fulfilled, (state, action) => {
-                  state.isLoading = false;
-                  state.heroData = action.payload.data || null;
+            });
+            builder.addCase(addUpdateHeroData.fulfilled, (state, action) => {
+                  state.loadingStates.updateHeroData = false;
+                  state.heroData = action.payload?.data || null;
                   state.error = null;
-            }).addCase(addUpdateHeroData.rejected, (state, action) => {
-                  state.isLoading = false;
-                  state.error = action.payload;
-            }).addCase(fetchHeroData.pending, (state) => {
-                  state.isLoading = true;
-                  state.error = null;
-            }).addCase(fetchHeroData.fulfilled, (state, action) => {
-                  state.isLoading = false;
-                  state.heroData = action.payload.data || null;
-                  state.error = null;
-            }).addCase(fetchHeroData.rejected, (state, action) => {
-                  state.isLoading = false;
+                  state.lastUpdated = new Date().toISOString();
+            });
+            builder.addCase(addUpdateHeroData.rejected, (state, action) => {
+                  state.loadingStates.updateHeroData = false;
                   state.error = action.payload;
             });
-      }
+
+
+            builder.addCase(fetchHeroData.pending, (state) => {
+                  state.loadingStates.fetchHeroData = true;
+                  state.error = null;
+            });
+            builder.addCase(fetchHeroData.fulfilled, (state, action) => {
+                  state.loadingStates.fetchHeroData = false;
+                  state.heroData = action.payload?.data || null;
+                  state.error = null;
+                  state.lastUpdated = new Date().toISOString();
+            });
+            builder.addCase(fetchHeroData.rejected, (state, action) => {
+                  state.loadingStates.fetchHeroData = false;
+                  state.error = action.payload;
+            });
+      },
 });
 
-export const heroActions = heroSlice.actions;
+export const { clearHeroError, resetHeroLoadingState } = heroSlice.actions;
 export default heroSlice.reducer;
