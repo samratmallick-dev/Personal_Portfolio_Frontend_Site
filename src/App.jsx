@@ -22,7 +22,7 @@ import CheckAuth from './components/common/CheckAuth';
 
 const App = () => {
 
-      useDisableContextMenuAndCopy();
+      // useDisableContextMenuAndCopy();
 
       return (
             <div className="flex flex-col overflow-hidden bg-background min-h-screen">
