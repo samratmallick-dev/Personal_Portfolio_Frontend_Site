@@ -24,7 +24,7 @@ export const SummeryApi = {
     deleteEducationUrl: "/api/v1/education/delete-education-details", 
 
     getHeroContentUrl: "/api/v1/hero/get-hero-content",
-    addUpdateHeroContentUrl: "/api/v1/hero/add-update-hero-content",
+    addUpdateHeroContentUrl: "/api/v1/hero/add-and-update-hero-content",
 
     createProjectUrl: "/api/v1/projects/add-project",
     getAllProjectsUrl: "/api/v1/projects/get-all-projects",
