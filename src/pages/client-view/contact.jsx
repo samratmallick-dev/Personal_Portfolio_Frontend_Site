@@ -55,7 +55,7 @@ const MyContact = () => {
                                     <img src={(contactDetails && contactDetails[0]?.contactImage) || profileImage} alt="Contact" className="w-40 h-40 rounded-full mx-auto border-4 border-primary/20 object-cover" />
                                     <Card className="hover-lift tech-glow">
                                           <CardHeader className="text-center text-3xl font-bold text-gradient">
-                                                <CardTitle>Connect & Location</CardTitle>
+                                                <CardTitle>Contact & Location</CardTitle>
                                           </CardHeader>
                                           <CardContent className="space-y-4">
                                                 {(() => {
