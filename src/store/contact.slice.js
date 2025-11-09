@@ -20,7 +20,7 @@ export const getContactDetails = createAsyncThunk(
                   });
                   return response.data;
             } catch (error) {
-                  return rejectWithValue(error.response?.data);
+                  return rejectWithValue(error.response?.data?.message || "Failed to fetch contact details");
             }
       }
 );
@@ -35,7 +35,7 @@ export const addUpdateContactDetails = createAsyncThunk(
                   });
                   return response.data;
             } catch (error) {
-                  return rejectWithValue(error.response?.data);
+                  return rejectWithValue(error.response?.data?.message || "Failed to update contact details");
             }
       }
 );
@@ -49,7 +49,7 @@ export const sendContactMessage = createAsyncThunk(
                   });
                   return response.data;
             } catch (error) {
-                  return rejectWithValue(error.response?.data);
+                  return rejectWithValue(error.response?.data?.message || "Failed to send message");
             }
       }
 );
@@ -63,7 +63,7 @@ export const getAllMessages = createAsyncThunk(
                   });
                   return response.data;
             } catch (error) {
-                  return rejectWithValue(error.response?.data);
+                  return rejectWithValue(error.response?.data?.message || "Failed to fetch messages");
             }
       }
 );
@@ -72,12 +72,12 @@ export const deleteMessageById = createAsyncThunk(
       "contact/deleteMessageById",
       async (messageId, { rejectWithValue }) => {
             try {
-                  const response = await axios.delete(`${baseUrl}${SummeryApi.deleteMessageUrl}${messageId}`, {
+                  const response = await axios.delete(`${baseUrl}${SummeryApi.deleteMessageUrl}/${messageId}`, {
                         withCredentials: true,
                   });
                   return response.data;
             } catch (error) {
-                  return rejectWithValue(error.response?.data);
+                  return rejectWithValue(error.response?.data?.message || "Failed to delete message");
             }
       }
 );
@@ -109,7 +109,7 @@ const contactSlice = createSlice({
                         state.isLoading = false;
                         const updated = action.payload?.data;
                         if (updated) {
-                              if (state.contact && state.contact.length > 0) {
+                              if (state.contact.length > 0) {
                                     state.contact[0] = updated;
                               } else {
                                     state.contact = [updated];
