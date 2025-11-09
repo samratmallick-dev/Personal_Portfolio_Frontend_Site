@@ -20,41 +20,64 @@ const AdminMessages = () => {
                   toast.success('Message deleted');
                   dispatch(getAllMessages());
             } catch (err) {
-                  toast.error(err?.message || 'Failed to delete message');
+                  toast.error(err || 'Failed to delete message');
             }
       };
 
+      const sortedMessages = [...(messages || [])].sort(
+            (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+      );
+
       return (
             <Fragment>
-                  <Card>
+                  <Card className="shadow-sm">
                         <CardHeader>
-                              <CardTitle>Contact Messages</CardTitle>
+                              <CardTitle className="text-xl font-semibold">Contact Messages</CardTitle>
                         </CardHeader>
-                        <CardContent>
+                        <CardContent className="space-y-4">
                               {isLoading ? (
                                     <div className="space-y-4">
                                           <Skeleton className="h-16 w-full" />
                                           <Skeleton className="h-16 w-full" />
                                           <Skeleton className="h-16 w-full" />
                                     </div>
-                              ) : messages && messages.length > 0 ? (
-                                    <div className="space-y-4">
-                                          {messages.map((m) => (
-                                                <div key={m._id} className="p-4 rounded-md border flex flex-col gap-2">
-                                                      <div className="flex flex-wrap justify-between gap-2">
-                                                            <div className="font-semibold">{m.name}</div>
-                                                            <div className="text-sm text-muted-foreground">{new Date(m.createdAt).toLocaleString()}</div>
-                                                      </div>
-                                                      <div className="text-sm text-muted-foreground break-all">{m.email} • {m.mobile}</div>
-                                                      <div className="text-sm">{m.message}</div>
-                                                      <div className="flex justify-end">
-                                                            <Button variant="destructive" size="sm" onClick={() => handleDelete(m._id)} disabled={isLoading}>Delete</Button>
-                                                      </div>
+                              ) : sortedMessages.length > 0 ? (
+                                    sortedMessages.map((m) => (
+                                          <div
+                                                key={m._id}
+                                                className="p-4 rounded-md border flex flex-col gap-2"
+                                          >
+                                                <div className="flex items-center justify-between">
+                                                      <span className="font-semibold">{m.name}</span>
+                                                      <span className="text-xs text-muted-foreground">
+                                                            {new Date(m.createdAt).toLocaleString()}
+                                                      </span>
                                                 </div>
-                                          ))}
-                                    </div>
+
+                                                <div className="text-sm text-muted-foreground">
+                                                      {m.email} • {m.mobile}
+                                                </div>
+
+                                                <div className="text-sm wrap-break-word leading-relaxed">
+                                                      {m.message}
+                                                </div>
+
+                                                <div className="flex justify-end">
+                                                      <Button
+                                                            variant="destructive"
+                                                            size="sm"
+                                                            onClick={() => handleDelete(m._id)}
+                                                            disabled={isLoading}
+                                                      >
+                                                            Delete
+                                                      </Button>
+                                                </div>
+                                          </div>
+                                    ))
                               ) : (
-                                    <div className="text-center p-8 text-muted-foreground">No messages found.</div>
+                                    <div className="text-center py-10 text-muted-foreground">
+                                          No messages found.
+                                    </div>
                               )}
                         </CardContent>
                   </Card>
