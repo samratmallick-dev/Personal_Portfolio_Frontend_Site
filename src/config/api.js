@@ -10,12 +10,12 @@ export const SummeryApi = {
     getAboutContentUrl: "/api/v1/about/get-about-content",
     addUpdateAboutContentUrl: "/api/v1/about/add-and-update-about-content",
 
-    getContactDetailsUrl: "/api/v1/conatct/get-contact-details",
-    addUpdateContactDetailsUrl: "/api/v1/conatct/add-update-contact-details",
-    sendMessageUrl: "/api/v1/conatct/send-message",
-    getAllMessagesUrl: "/api/v1/conatct/get-all-messages",
-    getMessageUrl: "/api/v1/conatct/get-message", 
-    deleteMessageUrl: "/api/v1/conatct/delete-message", 
+    getContactDetailsUrl: "/api/v1/contact/get-contact-details",
+    addUpdateContactDetailsUrl: "/api/v1/contact/add-update-contact-details",
+    sendMessageUrl: "/api/v1/contact/send-message",
+    getAllMessagesUrl: "/api/v1/contact/get-all-messages",
+    getMessageUrl: "/api/v1/contact/get-message", 
+    deleteMessageUrl: "/api/v1/contact/delete-message", 
 
     getAllEducationUrl: "/api/v1/education/get-all-education-details",
     getEducationUrl: "/api/v1/education/get-education-details", 
